@@ -44,25 +44,29 @@ ls(`${REPO_ROOT}/.buildkite`);
 //   '/var/lib/buildkite-agent/builds/kb-n2-4-spot-8d94c28da2235528/elastic/kibana-pull-request/kibana-build-xpack/.buildkite/'
 // );
 
-// const paths = [
-//   REPO_ROOT,
-//   `${REPO_ROOT}/.buildkite`,
-// ]
-
 const parentDir = (x: string) => execSync(`dirname ${x}`, { cwd: REPO_ROOT, encoding: 'utf8' });
+const contents = (x: string) => execSync(`ls ${x}`, { cwd: REPO_ROOT, encoding: 'utf8' });
+// const contentsAtDepth =
+//   (n: number = 2) =>
+//   (x: any) => {
+//     console.log(`\n### Contents of ${x} \n\tat Depth: ${n}`);
+//     return execSync(`find ${x} -maxdepth 4 -ls`, { cwd: REPO_ROOT, encoding: 'utf8' });
+//   };
 let repoRootParent;
-
+let repoRootParentContents;
 // eslint-disable-next-line no-console
 console.log('\n--- Show some path info!');
-
 try {
-  repoRootParent = parentDir(REPO_ROOT);
-  // eslint-disable-next-line no-console
-  console.log(`\n### repoRootParent: \n  ${repoRootParent}`);
+  repoRootParent = `${parentDir(REPO_ROOT)}`; // String conversion hack
+  repoRootParentContents = contents(repoRootParent);
 } catch (e) {
   // eslint-disable-next-line no-console
   console.error(`\n### Error looking at paths e: \n  ${e}`);
 }
+// eslint-disable-next-line no-console
+console.log(`\n### repoRootParent: \n  ${repoRootParent}`);
+// eslint-disable-next-line no-console
+console.log(`\n### repoRootParentContents: \n${repoRootParentContents}`);
 process.exit(999);
 
 async function ls(dir: string) {
