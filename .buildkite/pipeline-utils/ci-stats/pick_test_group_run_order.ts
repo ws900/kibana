@@ -389,7 +389,22 @@ export async function pickTestGroupRunOrder() {
 
   if (ftrConfigsIncluded) {
     // write the config for functional steps to an artifact that can be used by the individual functional jobs
-    Fs.writeFileSync('ftr_run_order.json', JSON.stringify(ftrRunOrder, null, 2));
+    Fs.writeFileSync(
+      'ftr_run_order.json',
+      JSON.stringify(
+        {
+          ftr_configs_0: {
+            title: 'FTR Configs #1',
+            expectedDurationMin: 35.4,
+            names: [
+              'x-pack/test/alerting_api_integration/security_and_spaces/group2/config_non_dedicated_task_runner.ts',
+            ],
+          },
+        },
+        null,
+        2
+      )
+    );
     bk.uploadArtifacts('ftr_run_order.json');
   }
 
