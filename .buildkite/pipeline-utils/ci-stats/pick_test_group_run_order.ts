@@ -334,8 +334,8 @@ export async function pickTestGroupRunOrder() {
   const unit = getRunGroup(bk, types, UNIT_TYPE);
   const integration = getRunGroup(bk, types, INTEGRATION_TYPE);
 
-  let configCounter = 0;
-  let groupCounter = 0;
+  const configCounter = 0;
+  const groupCounter = 0;
 
   // the relevant data we will use to define the pipeline steps
   const functionalGroups: Array<{
@@ -348,40 +348,48 @@ export async function pickTestGroupRunOrder() {
   const ftrRunOrder: Record<
     string,
     { title: string; expectedDurationMin: number; names: string[] }
-  > = {};
+  > = {
+    ftr_configs_0: {
+      title: 'FTR Configs #1',
+      expectedDurationMin: 35.4,
+      names: [
+        'x-pack/test/alerting_api_integration/security_and_spaces/group2/config_non_dedicated_task_runner.ts',
+      ],
+    },
+  };
 
-  if (ftrConfigsByQueue.size) {
-    for (const { groups, queue } of getRunGroups(bk, types, FUNCTIONAL_TYPE)) {
-      for (const group of groups) {
-        if (!group.names.length) {
-          continue;
-        }
+  // if (ftrConfigsByQueue.size) {
+  //   for (const { groups, queue } of getRunGroups(bk, types, FUNCTIONAL_TYPE)) {
+  //     for (const group of groups) {
+  //       if (!group.names.length) {
+  //         continue;
+  //       }
 
-        const key = `ftr_configs_${configCounter++}`;
-        let sortBy;
-        let title;
-        if (group.names.length === 1) {
-          title = group.names[0];
-          sortBy = title;
-        } else {
-          sortBy = ++groupCounter;
-          title = `FTR Configs #${sortBy}`;
-        }
+  //       const key = `ftr_configs_${configCounter++}`;
+  //       let sortBy;
+  //       let title;
+  //       if (group.names.length === 1) {
+  //         title = group.names[0];
+  //         sortBy = title;
+  //       } else {
+  //         sortBy = ++groupCounter;
+  //         title = `FTR Configs #${sortBy}`;
+  //       }
 
-        functionalGroups.push({
-          title,
-          key,
-          sortBy,
-          queue: queue ?? defaultQueue,
-        });
-        ftrRunOrder[key] = {
-          title,
-          expectedDurationMin: group.durationMin,
-          names: group.names,
-        };
-      }
-    }
-  }
+  //       functionalGroups.push({
+  //         title,
+  //         key,
+  //         sortBy,
+  //         queue: queue ?? defaultQueue,
+  //       });
+  //       ftrRunOrder[key] = {
+  //         title,
+  //         expectedDurationMin: group.durationMin,
+  //         names: group.names,
+  //       };
+  //     }
+  //   }
+  // }
 
   // write the config for each step to an artifact that can be used by the individual jest jobs
   Fs.writeFileSync('jest_run_order.json', JSON.stringify({ unit, integration }, null, 2));
@@ -389,22 +397,7 @@ export async function pickTestGroupRunOrder() {
 
   if (ftrConfigsIncluded) {
     // write the config for functional steps to an artifact that can be used by the individual functional jobs
-    Fs.writeFileSync(
-      'ftr_run_order.json',
-      JSON.stringify(
-        {
-          ftr_configs_0: {
-            title: 'FTR Configs #1',
-            expectedDurationMin: 35.4,
-            names: [
-              'x-pack/test/alerting_api_integration/security_and_spaces/group2/config_non_dedicated_task_runner.ts',
-            ],
-          },
-        },
-        null,
-        2
-      )
-    );
+    Fs.writeFileSync('ftr_run_order.json', JSON.stringify(ftrRunOrder, null, 2));
     bk.uploadArtifacts('ftr_run_order.json');
   }
 
