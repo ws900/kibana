@@ -46,6 +46,10 @@ ls(`${REPO_ROOT}/.buildkite`);
 
 const parentDir = (x: string) => execSync(`dirname ${x}`, { cwd: REPO_ROOT, encoding: 'utf8' });
 const contents = (x: string) => execSync(`ls ${x}`, { cwd: REPO_ROOT, encoding: 'utf8' });
+const contentsDepth =
+  (n: number = 2) =>
+  (x: string) =>
+    execSync(`ls ${x}/*/*/`, { cwd: REPO_ROOT, encoding: 'utf8' });
 // const contentsAtDepth =
 //   (n: number = 2) =>
 //   (x: any) => {
@@ -54,11 +58,15 @@ const contents = (x: string) => execSync(`ls ${x}`, { cwd: REPO_ROOT, encoding: 
 //   };
 let repoRootParent;
 let repoRootParentContents;
+let repoRootParentContentsDepth1;
+let repoRootParentContentsDepth2;
 // eslint-disable-next-line no-console
 console.log('\n--- Show some path info!');
 try {
   repoRootParent = `${parentDir(REPO_ROOT)}`; // String conversion hack
   repoRootParentContents = contents(repoRootParent);
+  repoRootParentContentsDepth1 = contentsDepth(1)(repoRootParent);
+  repoRootParentContentsDepth2 = contentsDepth()(repoRootParent);
 } catch (e) {
   // eslint-disable-next-line no-console
   console.error(`\n### Error looking at paths e: \n  ${e}`);
@@ -67,7 +75,10 @@ try {
 console.log(`\n### repoRootParent: \n  ${repoRootParent}`);
 // eslint-disable-next-line no-console
 console.log(`\n### repoRootParentContents: \n${repoRootParentContents}`);
-process.exit(999);
+// eslint-disable-next-line no-console
+console.log(`\n### repoRootParentContentsDepth1: \n  ${repoRootParentContentsDepth1}`);
+// eslint-disable-next-line no-console
+console.log(`\n### repoRootParentContentsDepth2: \n  ${repoRootParentContentsDepth2}`);
 
 async function ls(dir: string) {
   try {
