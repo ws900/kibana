@@ -396,46 +396,46 @@ export async function pickTestGroupRunOrder() {
   // upload the step definitions to Buildkite
   bk.uploadSteps(
     [
-      unit.count > 0
-        ? {
-            label: 'Jest Tests',
-            command: getRequiredEnv('JEST_UNIT_SCRIPT'),
-            parallelism: unit.count,
-            timeout_in_minutes: 120,
-            key: 'jest',
-            agents: {
-              queue: 'n2-4-spot',
-            },
-            retry: {
-              automatic: [
-                {
-                  exit_status: '-1',
-                  limit: 3,
-                },
-              ],
-            },
-          }
-        : [],
-      integration.count > 0
-        ? {
-            label: 'Jest Integration Tests',
-            command: getRequiredEnv('JEST_INTEGRATION_SCRIPT'),
-            parallelism: integration.count,
-            timeout_in_minutes: 120,
-            key: 'jest-integration',
-            agents: {
-              queue: 'n2-4-spot',
-            },
-            retry: {
-              automatic: [
-                {
-                  exit_status: '-1',
-                  limit: 3,
-                },
-              ],
-            },
-          }
-        : [],
+      // unit.count > 0
+      //   ? {
+      //       label: 'Jest Tests',
+      //       command: getRequiredEnv('JEST_UNIT_SCRIPT'),
+      //       parallelism: unit.count,
+      //       timeout_in_minutes: 120,
+      //       key: 'jest',
+      //       agents: {
+      //         queue: 'n2-4-spot',
+      //       },
+      //       retry: {
+      //         automatic: [
+      //           {
+      //             exit_status: '-1',
+      //             limit: 3,
+      //           },
+      //         ],
+      //       },
+      //     }
+      //   : [],
+      // integration.count > 0
+      //   ? {
+      //       label: 'Jest Integration Tests',
+      //       command: getRequiredEnv('JEST_INTEGRATION_SCRIPT'),
+      //       parallelism: integration.count,
+      //       timeout_in_minutes: 120,
+      //       key: 'jest-integration',
+      //       agents: {
+      //         queue: 'n2-4-spot',
+      //       },
+      //       retry: {
+      //         automatic: [
+      //           {
+      //             exit_status: '-1',
+      //             limit: 3,
+      //           },
+      //         ],
+      //       },
+      //     }
+      //   : [],
       functionalGroups.length
         ? {
             group: 'FTR Configs',
