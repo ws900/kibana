@@ -10,7 +10,7 @@ steps:
   - label: ':kibana: Scalability Tests'
     command: .buildkite/scripts/steps/scalability/benchmarking.sh
     agents:
-      queue: kb-static-scalability
+      queue: kb-static-scalability-2
     timeout_in_minutes: 90
     retry:
       automatic:
