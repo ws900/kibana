@@ -39,6 +39,7 @@ const migrationSchema = schema.object({
   retryAttempts: schema.number({ defaultValue: 15 }),
   zdt: schema.object({
     metaPickupSyncDelaySec: schema.number({ min: 1, defaultValue: 120 }),
+    runOnNonMigratorNodes: schema.boolean({ defaultValue: true }),
   }),
 });
 
