@@ -22,6 +22,7 @@ import { getField } from '../../shared/utils';
 import { HostEntityOverview } from './host_entity_overview';
 import { UserEntityOverview } from './user_entity_overview';
 import { LeftPanelKey, LeftPanelInsightsTabPath } from '../../left';
+import { ENTITIES_TAB_ID } from '../../left/components/entities_details';
 
 const USER_ICON = 'user';
 const HOST_ICON = 'storage';
@@ -43,6 +44,7 @@ export const EntitiesOverview: React.FC = () => {
         id: eventId,
         indexName,
         scopeId,
+        navigation: { subTab: ENTITIES_TAB_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

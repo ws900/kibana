@@ -25,7 +25,7 @@ import {
 import type { StatsNode } from '../../../common/containers/alerts/use_alert_prevalence_from_process_tree';
 import { getTreeNodes } from '../utils/analyzer_helpers';
 import { ERROR_TITLE, ERROR_MESSAGE } from '../../shared/translations';
-
+import { ANALYZE_GRAPH_ID } from '../../left/components/analyze_graph';
 export interface AnalyzerTreeProps {
   /**
    * statsNode data from resolver tree api
@@ -57,6 +57,7 @@ export const AnalyzerTree: React.FC<AnalyzerTreeProps> = ({ statsNodes, loading,
         id: eventId,
         indexName,
         scopeId,
+        navigation: { subTab: ANALYZE_GRAPH_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

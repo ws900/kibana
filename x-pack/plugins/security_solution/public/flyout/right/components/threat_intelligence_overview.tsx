@@ -24,6 +24,7 @@ import {
   THREAT_ENRICHMENTS,
 } from './translations';
 import { LeftPanelKey, LeftPanelInsightsTabPath } from '../../left';
+import { THREAT_INTELLIGENCE_TAB_ID } from '../../left/components/threat_intelligence_details';
 
 /**
  * Threat Intelligence section under Insights section, overview tab.
@@ -42,6 +43,7 @@ export const ThreatIntelligenceOverview: FC = () => {
         id: eventId,
         indexName,
         scopeId,
+        navigation: { subTab: THREAT_INTELLIGENCE_TAB_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

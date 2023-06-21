@@ -32,6 +32,7 @@ export const InvestigationGuideButton: React.FC = () => {
         id: eventId,
         indexName,
         scopeId,
+        navigation: {},
       },
     });
   }, [eventId, indexName, openLeftPanel, scopeId]);

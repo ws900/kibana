@@ -11,7 +11,7 @@ import React, { createContext, useContext, useMemo } from 'react';
 import { EuiFlexItem, EuiLoadingSpinner } from '@elastic/eui';
 import type { EcsSecurityExtension as Ecs } from '@kbn/securitysolution-ecs';
 import type { SearchHit } from '../../../common/search_strategy';
-import type { LeftPanelProps } from '.';
+import type { LeftPanelProps, Navigation } from '.';
 import type { GetFieldsData } from '../../common/hooks/use_get_fields_data';
 import { useGetFieldsData } from '../../common/hooks/use_get_fields_data';
 import { useTimelineEventsDetails } from '../../timelines/containers/details';
@@ -55,6 +55,10 @@ export interface LeftPanelContext {
    * Retrieves searchHit values for the provided field
    */
   getFieldsData: GetFieldsData;
+  /**
+   * Navigation information for displaying subtab and subsections
+   */
+  navigation: Navigation;
 }
 
 export const LeftPanelContext = createContext<LeftPanelContext | undefined>(undefined);
@@ -66,7 +70,13 @@ export type LeftPanelProviderProps = {
   children: React.ReactNode;
 } & Partial<LeftPanelProps['params']>;
 
-export const LeftPanelProvider = ({ id, indexName, scopeId, children }: LeftPanelProviderProps) => {
+export const LeftPanelProvider = ({
+  id,
+  indexName,
+  scopeId,
+  navigation,
+  children,
+}: LeftPanelProviderProps) => {
   const currentSpaceId = useSpaceId();
   const eventIndex = indexName ? getAlertIndexAlias(indexName, currentSpaceId) ?? indexName : '';
   const [{ pageName }] = useRouteSpy();
@@ -86,7 +96,7 @@ export const LeftPanelProvider = ({ id, indexName, scopeId, children }: LeftPane
 
   const contextValue = useMemo(
     () =>
-      id && indexName && scopeId
+      id && indexName && scopeId && navigation
         ? {
             eventId: id,
             indexName,
@@ -96,6 +106,7 @@ export const LeftPanelProvider = ({ id, indexName, scopeId, children }: LeftPane
             dataFormattedForFieldBrowser,
             searchHit,
             getFieldsData,
+            navigation,
           }
         : undefined,
     [
@@ -107,6 +118,7 @@ export const LeftPanelProvider = ({ id, indexName, scopeId, children }: LeftPane
       getFieldsData,
       dataAsNestedObject,
       searchHit,
+      navigation,
     ]
   );
 

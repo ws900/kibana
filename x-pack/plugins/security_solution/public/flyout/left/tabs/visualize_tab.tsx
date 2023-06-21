@@ -6,7 +6,7 @@
  */
 
 import type { FC } from 'react';
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import { EuiButtonGroup, EuiSpacer } from '@elastic/eui';
 import type { EuiButtonGroupOptionProps } from '@elastic/eui/src/components/button/button_group/button_group';
 import {
@@ -23,6 +23,7 @@ import {
 import { SESSION_VIEW_ID, SessionView } from '../components/session_view';
 import { ALERTS_ACTIONS } from '../../../common/lib/apm/user_actions';
 import { useStartTransaction } from '../../../common/lib/apm/use_start_transaction';
+import { useLeftPanelContext } from '../context';
 
 const visualizeButtons: EuiButtonGroupOptionProps[] = [
   {
@@ -41,7 +42,10 @@ const visualizeButtons: EuiButtonGroupOptionProps[] = [
  * Visualize view displayed in the document details expandable flyout left section
  */
 export const VisualizeTab: FC = memo(() => {
-  const [activeVisualizationId, setActiveVisualizationId] = useState(SESSION_VIEW_ID);
+  const { navigation } = useLeftPanelContext();
+  const [activeVisualizationId, setActiveVisualizationId] = useState(
+    navigation?.subTab ?? SESSION_VIEW_ID
+  );
   const { startTransaction } = useStartTransaction();
   const onChangeCompressed = useCallback(
     (optionId: string) => {
@@ -52,6 +56,12 @@ export const VisualizeTab: FC = memo(() => {
     },
     [startTransaction]
   );
+
+  useEffect(() => {
+    if (navigation?.subTab) {
+      setActiveVisualizationId(navigation?.subTab);
+    }
+  }, [navigation?.subTab]);
 
   return (
     <>

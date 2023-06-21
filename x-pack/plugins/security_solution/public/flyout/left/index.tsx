@@ -24,6 +24,10 @@ export const LeftPanelVisualizeTabPath: LeftPanelProps['path'] = ['visualize'];
 export const LeftPanelInsightsTabPath: LeftPanelProps['path'] = ['insights'];
 export const LeftPanelInvestigationTabPath: LeftPanelProps['path'] = ['investigation'];
 
+export interface Navigation {
+  subTab: string;
+  subSections?: string[];
+}
 export interface LeftPanelProps extends FlyoutPanel {
   key: 'document-details-left';
   path?: LeftPanelPaths[];
@@ -31,12 +35,13 @@ export interface LeftPanelProps extends FlyoutPanel {
     id: string;
     indexName: string;
     scopeId: string;
+    navigation: Navigation;
   };
 }
 
 export const LeftPanel: FC<Partial<LeftPanelProps>> = memo(({ path }) => {
   const { openLeftPanel } = useExpandableFlyoutContext();
-  const { eventId, indexName, scopeId } = useLeftPanelContext();
+  const { eventId, indexName, scopeId, navigation } = useLeftPanelContext();
 
   const selectedTabId = useMemo(() => {
     const defaultTab = tabs[0].id;
@@ -52,6 +57,7 @@ export const LeftPanel: FC<Partial<LeftPanelProps>> = memo(({ path }) => {
         id: eventId,
         indexName,
         scopeId,
+        navigation: navigation ?? {},
       },
     });
   };

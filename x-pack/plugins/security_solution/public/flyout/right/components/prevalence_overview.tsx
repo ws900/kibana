@@ -15,6 +15,7 @@ import { InsightsSubSection } from './insights_subsection';
 import { useRightPanelContext } from '../context';
 import { PREVALENCE_TEXT, PREVALENCE_TITLE, VIEW_ALL } from './translations';
 import { LeftPanelKey, LeftPanelInsightsTabPath } from '../../left';
+import { PREVALENCE_TAB_ID } from '../../left/components/prevalence_details';
 
 /**
  * Prevalence section under Insights section, overview tab.
@@ -34,6 +35,7 @@ export const PrevalenceOverview: FC = () => {
         id: eventId,
         indexName,
         scopeId,
+        navigation: { subTab: PREVALENCE_TAB_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);
