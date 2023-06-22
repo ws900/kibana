@@ -9,9 +9,9 @@
 import { Logger, IRouter } from '@kbn/core/server';
 
 import { registerRoute as registerRoute_GET_cpu_profile } from './GET_cpu_profile';
-import { registerRoute as registerRoute_GET_heap_snapshot } from './GET_heap_profile';
+import { registerRoute as registerRoute_GET_heap_profile } from './GET_heap_profile';
 
 export function registerRoutes(logger: Logger, router: IRouter): void {
   registerRoute_GET_cpu_profile(logger, router);
-  registerRoute_GET_heap_snapshot(logger, router);
+  registerRoute_GET_heap_profile(logger, router);
 }

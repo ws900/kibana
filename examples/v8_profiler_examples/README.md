@@ -3,14 +3,6 @@
 Provides access to the V8 CPU Profiler and Heap Profiler, to inspect
 the Kibana running this plugin.
 
-_this was a dust-off-and-polish effort; the original code is here: https://github.com/elastic/kibana/pull/129839_
-
-HTTP endpoints in Kibana to run a CPU profile for specified duration, and
-obtain a heap snapshot. 
-
-_Note: at the time of this writing, there appears to be something broken with
-the heap snapshots.  They often never finish, on the server side._
-
 The endpoints are:
 
     /_dev/cpu_profile?duration=(seconds)&interval=(microseconds)
@@ -19,7 +11,7 @@ The endpoints are:
 Try them right now, assuming you started Kibana with `--run-examples`!
 
 - [`http://localhost:5601/_dev/cpu_profile`](http://localhost:5601/_dev/cpu_profile)
-- [`http://localhost:5601/_dev/heap_snapshot`](http://localhost:5601/_dev/heap_profile)
+- [`http://localhost:5601/_dev/heap_profile`](http://localhost:5601/_dev/heap_profile)
   
 
 When using curl, you can use the `-kOJ` options, which:

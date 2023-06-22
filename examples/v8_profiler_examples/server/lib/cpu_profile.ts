@@ -8,14 +8,21 @@
 
 import { Session } from './session';
 
+interface StartProfilingArgs {
+  interval: number;
+}
+
 // Start a new profile, resolves to a function to stop the profile and resolve
 // the profile data.
-export async function startProfiling(session: Session, interval: number): Promise<() => any> {
+export async function startProfiling(
+  session: Session,
+  args: StartProfilingArgs
+): Promise<() => any> {
   session.logger.info('starting cpu profile');
 
   await session.post('Profiler.enable');
   // microseconds, v8 default is 1000
-  await session.post('Profiler.setSamplingInterval', { interval });
+  await session.post('Profiler.setSamplingInterval', args);
   await session.post('Profiler.start');
 
   // returned function which stops the profile and resolves to the profile data
