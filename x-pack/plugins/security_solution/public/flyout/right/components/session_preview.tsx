@@ -20,7 +20,7 @@ import {
   SESSION_PREVIEW_TIME_TEXT,
   SESSION_PREVIEW_TITLE,
 } from './translations';
-import { LeftPanelKey, LeftPanelVisualizeTabPath } from '../../left';
+import { LeftPanelKey } from '../../left';
 import { RenderRuleName } from '../../../timelines/components/timeline/body/renderers/formatted_field_helpers';
 import { SESSION_VIEW_ID } from '../../left/components/session_view';
 
@@ -50,12 +50,14 @@ export const SessionPreview: FC = () => {
   const goToSessionViewTab = useCallback(() => {
     openLeftPanel({
       id: LeftPanelKey,
-      path: LeftPanelVisualizeTabPath,
+      path: {
+        tab: 'visualize',
+        subTab: SESSION_VIEW_ID,
+      },
       params: {
         id: eventId,
         indexName,
         scopeId,
-        navigation: { subTab: SESSION_VIEW_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

@@ -21,7 +21,7 @@ import { EntityPanel } from './entity_panel';
 import { getField } from '../../shared/utils';
 import { HostEntityOverview } from './host_entity_overview';
 import { UserEntityOverview } from './user_entity_overview';
-import { LeftPanelKey, LeftPanelInsightsTabPath } from '../../left';
+import { LeftPanelKey } from '../../left';
 import { ENTITIES_TAB_ID } from '../../left/components/entities_details';
 
 const USER_ICON = 'user';
@@ -39,12 +39,14 @@ export const EntitiesOverview: React.FC = () => {
   const goToEntitiesTab = useCallback(() => {
     openLeftPanel({
       id: LeftPanelKey,
-      path: LeftPanelInsightsTabPath,
+      path: {
+        tab: 'insights',
+        subTab: ENTITIES_TAB_ID,
+      },
       params: {
         id: eventId,
         indexName,
         scopeId,
-        navigation: { subTab: ENTITIES_TAB_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

@@ -30,7 +30,6 @@ export const ExpandDetailButton: FC = memo(() => {
         id: eventId,
         indexName,
         scopeId,
-        navigation: {},
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

@@ -9,6 +9,7 @@ import type { FC } from 'react';
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import { EuiButtonGroup, EuiSpacer } from '@elastic/eui';
 import type { EuiButtonGroupOptionProps } from '@elastic/eui/src/components/button/button_group/button_group';
+import { useExpandableFlyoutContext } from '@kbn/expandable-flyout';
 import {
   VISUALIZE_TAB_BUTTON_GROUP_TEST_ID,
   VISUALIZE_TAB_GRAPH_ANALYZER_BUTTON_TEST_ID,
@@ -23,7 +24,6 @@ import {
 import { SESSION_VIEW_ID, SessionView } from '../components/session_view';
 import { ALERTS_ACTIONS } from '../../../common/lib/apm/user_actions';
 import { useStartTransaction } from '../../../common/lib/apm/use_start_transaction';
-import { useLeftPanelContext } from '../context';
 
 const visualizeButtons: EuiButtonGroupOptionProps[] = [
   {
@@ -42,9 +42,9 @@ const visualizeButtons: EuiButtonGroupOptionProps[] = [
  * Visualize view displayed in the document details expandable flyout left section
  */
 export const VisualizeTab: FC = memo(() => {
-  const { navigation } = useLeftPanelContext();
+  const { panels } = useExpandableFlyoutContext();
   const [activeVisualizationId, setActiveVisualizationId] = useState(
-    navigation?.subTab ?? SESSION_VIEW_ID
+    panels.right?.path?.subTab ?? SESSION_VIEW_ID
   );
   const { startTransaction } = useStartTransaction();
   const onChangeCompressed = useCallback(
@@ -58,10 +58,10 @@ export const VisualizeTab: FC = memo(() => {
   );
 
   useEffect(() => {
-    if (navigation?.subTab) {
-      setActiveVisualizationId(navigation?.subTab);
+    if (panels.right?.path?.subTab) {
+      setActiveVisualizationId(panels.right?.path?.subTab);
     }
-  }, [navigation?.subTab]);
+  }, [panels.right?.path?.subTab]);
 
   return (
     <>

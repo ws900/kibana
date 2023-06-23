@@ -23,7 +23,7 @@ import {
   THREAT_MATCHES_DETECTED,
   THREAT_ENRICHMENTS,
 } from './translations';
-import { LeftPanelKey, LeftPanelInsightsTabPath } from '../../left';
+import { LeftPanelKey } from '../../left';
 import { THREAT_INTELLIGENCE_TAB_ID } from '../../left/components/threat_intelligence_details';
 
 /**
@@ -38,12 +38,14 @@ export const ThreatIntelligenceOverview: FC = () => {
   const goToThreatIntelligenceTab = useCallback(() => {
     openLeftPanel({
       id: LeftPanelKey,
-      path: LeftPanelInsightsTabPath,
+      path: {
+        tab: 'insights',
+        subTab: THREAT_INTELLIGENCE_TAB_ID,
+      },
       params: {
         id: eventId,
         indexName,
         scopeId,
-        navigation: { subTab: THREAT_INTELLIGENCE_TAB_ID },
       },
     });
   }, [eventId, openLeftPanel, indexName, scopeId]);

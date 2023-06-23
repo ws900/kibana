@@ -9,6 +9,7 @@ import React, { memo, useCallback, useState, useEffect } from 'react';
 
 import { EuiButtonGroup, EuiSpacer } from '@elastic/eui';
 import type { EuiButtonGroupOptionProps } from '@elastic/eui/src/components/button/button_group/button_group';
+import { useExpandableFlyoutContext } from '@kbn/expandable-flyout';
 import { RESPONSE_TAB_ID, ResponseDetails } from '../components/response_details';
 import {
   INSIGHTS_TAB_BUTTON_GROUP_TEST_ID,
@@ -34,7 +35,6 @@ import {
 } from '../components/threat_intelligence_details';
 import { PREVALENCE_TAB_ID, PrevalenceDetails } from '../components/prevalence_details';
 import { CORRELATIONS_TAB_ID, CorrelationsDetails } from '../components/correlations_details';
-import { useLeftPanelContext } from '../context';
 
 const insightsButtons: EuiButtonGroupOptionProps[] = [
   {
@@ -68,18 +68,20 @@ const insightsButtons: EuiButtonGroupOptionProps[] = [
  * Insights view displayed in the document details expandable flyout left section
  */
 export const InsightsTab: React.FC = memo(() => {
-  const { navigation } = useLeftPanelContext();
-  const [activeInsightsId, setActiveInsightsId] = useState(navigation?.subTab ?? ENTITIES_TAB_ID);
+  const { panels } = useExpandableFlyoutContext();
+  const [activeInsightsId, setActiveInsightsId] = useState(
+    panels.left?.path?.subTab ?? ENTITIES_TAB_ID
+  );
 
   const onChangeCompressed = useCallback((optionId: string) => {
     setActiveInsightsId(optionId);
   }, []);
 
   useEffect(() => {
-    if (navigation?.subTab) {
-      setActiveInsightsId(navigation?.subTab);
+    if (panels.left?.path?.subTab) {
+      setActiveInsightsId(panels.left?.path?.subTab);
     }
-  }, [navigation?.subTab]);
+  }, [panels.left?.path?.subTab]);
 
   return (
     <>

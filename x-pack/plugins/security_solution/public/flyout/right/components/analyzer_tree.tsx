@@ -14,7 +14,7 @@ import {
 } from '@elastic/eui';
 import { useExpandableFlyoutContext } from '@kbn/expandable-flyout';
 import { useRightPanelContext } from '../context';
-import { LeftPanelKey, LeftPanelVisualizeTabPath } from '../../left';
+import { LeftPanelKey } from '../../left';
 import { ANALYZER_PREVIEW_TITLE, ANALYZER_PREVIEW_TEXT } from './translations';
 import {
   ANALYZER_TREE_TEST_ID,
@@ -52,7 +52,10 @@ export const AnalyzerTree: React.FC<AnalyzerTreeProps> = ({ statsNodes, loading,
   const goToAnalyserTab = useCallback(() => {
     openLeftPanel({
       id: LeftPanelKey,
-      path: LeftPanelVisualizeTabPath,
+      path: {
+        tab: 'visualize',
+        subTab: ANALYZE_GRAPH_ID,
+      },
       params: {
         id: eventId,
         indexName,
