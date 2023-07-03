@@ -32,7 +32,9 @@ export default function ({ getService, getPageObjects }: FtrProviderContext) {
       await PageObjects.console.enterText(`{\n\t"query": {`);
       await PageObjects.console.pressEnter();
       await PageObjects.console.promptAutocomplete();
-      expect(PageObjects.console.isAutocompleteVisible()).to.be.eql(true);
+      // expect(PageObjects.console.isAutocompleteVisible()).to.be.eql(true);
+      expect(1).to.be.eql(2);
+      process.exit(999);
     });
 
     describe('with a missing comma in query', () => {
