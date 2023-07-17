@@ -6,6 +6,7 @@
  */
 
 import type { DataTableModel } from '@kbn/securitysolution-data-table';
+import { disableExpandableFlyout } from '../../../tasks/api_calls/kibana_advanced_settings';
 import {
   ALERT_FLYOUT,
   CELL_TEXT,
@@ -173,6 +174,7 @@ describe('Alert details flyout', () => {
 
     beforeEach(() => {
       login();
+      disableExpandableFlyout();
       visit(ALERTS_URL);
       waitForAlertsToPopulate();
       expandFirstAlert();
