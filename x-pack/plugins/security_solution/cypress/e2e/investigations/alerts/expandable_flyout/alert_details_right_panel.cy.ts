@@ -83,12 +83,12 @@ describe('Alert details expandable flyout right panel', () => {
 
     cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_CHAT_BUTTON).should('be.visible');
 
-      cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_STATUS).should('be.visible');
+    cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_STATUS).should('be.visible');
 
-      cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_RISK_SCORE).should('be.visible');
-      cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_RISK_SCORE_VALUE)
-        .should('be.visible')
-        .and('have.text', rule.risk_score);
+    cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_RISK_SCORE).should('be.visible');
+    cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_RISK_SCORE_VALUE)
+      .should('be.visible')
+      .and('have.text', rule.risk_score);
 
     cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_SEVERITY).should('be.visible');
     cy.get(DOCUMENT_DETAILS_FLYOUT_HEADER_SEVERITY_VALUE)
